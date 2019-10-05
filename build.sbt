@@ -36,6 +36,7 @@ lazy val projectSettings = Seq(
     "org.apache.pdfbox" % "pdfbox" % "2.0.1",
     "org.apache.pdfbox" % "fontbox" % "2.0.1",
     "com.typesafe" % "config" % "1.3.0",
+    "io.javalin" % "javalin" % "3.5.0",
 
     // So PDFBox can parse more image formats
     // These are disabled by default, because they are not licensed flexibly enough.
@@ -57,16 +58,17 @@ lazy val projectSettings = Seq(
           <email>dev-role@allenai.org</email>
         </developer>
       </developers>
+
 )
 
 lazy val root = (project in file("."))
     .settings(projectSettings)
 
-mainClass in (Compile, run) := Some("org.allenai.pdffigures2.FigureExtractorBatchCli")
-mainClass in assembly := Some("org.allenai.pdffigures2.FigureExtractorBatchCli")
+mainClass in (Compile, run) := Some("org.allenai.pdffigures2.FigureExtractorBatchApi")
+mainClass in assembly := Some("org.allenai.pdffigures2.FigureExtractorBatchApi")
 
 assemblyMergeStrategy in assembly := {
-  case PathList("org", "apache", "commons", xs @ _*) => MergeStrategy.first
+  case PathList("io","org", "apache", "commons", xs @ _*) => MergeStrategy.first
   case x =>
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
